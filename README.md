@@ -1,0 +1,2 @@
+# saltjs
+Some salty framework.
