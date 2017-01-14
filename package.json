@@ -1,6 +1,6 @@
 {
   "name": "saltjs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A nice Discord modular framework.",
   "main": "index.js",
   "scripts": {
