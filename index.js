@@ -267,7 +267,10 @@ class Storage extends Map {
         return new this.constructor(this.array().reverse());
     }
     equals(storage, order = true, strict = true) {
-        if ((!(storage instanceof this.constructor)) || (storage.keysArray().length !== this.keysArray().length)) {
+        if (!(storage instanceof this.constructor)) {
+            return false;
+        }
+        if (storage.keysArray().length !== this.keysArray().length) {
             return false;
         }
         if (order) {
