@@ -19,6 +19,9 @@ class Storage extends Map {
     constructor(iterable) {
         super(iterable);
     }
+    static fromObject(obj) {
+        return new this(Object.entries(obj));
+    }
     valuesArray() {
         return Array.from(this.values());
     }
