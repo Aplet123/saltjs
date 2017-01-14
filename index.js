@@ -419,6 +419,9 @@ class Storage extends Map {
         }
         return new this.constructor(this.array().splice.apply(this.array(), [start, delcount].concat(items)));
     }
+    toString() {
+        return `[object ${this.constructor.name}]`;
+    }
 }
 
 function LoadEvents(array, emitter, thisArg) {
