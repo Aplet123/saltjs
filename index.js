@@ -212,13 +212,53 @@ class Storage extends Map {
         }
         return ret;
     }
-    findKeyAll(test, value) {
+    findKeyAll(test, value, caseSensitive = true, strict = true) {
         var ret = [];
-        this.array().map(v => {
-            if (test(v[1], v[0], this)) {
-                ret.push(v[0]);
-            }
-        });
+        if (test instanceof Function) {
+            this.array().map(v => {
+                if (test(v[1], v[0], this)) {
+                    ret.push(v[0]);
+                }
+            });
+        } else if (typeof test === "string") {
+            this.array().map(v => {
+                if (strict) {
+                    if (!caseSensitive) {
+                        if (typeof v[1][test] === "string" && typeof value === "string") {
+                            if (v[1][test].toLowerCase() === value.toLowerCase()) {
+                                ret.push(v[0]);
+                            }
+                        } else {
+                            if (v[1][test] === value) {
+                                ret.push(v[0]);
+                            }
+                        }
+                    } else {
+                        if (v[1][test] === value) {
+                            ret.push(v[0]);
+                        }
+                    }
+                } else {
+                    if (!caseSensitive) {
+                        if (typeof v[1][test] === "string" && typeof value === "string") {
+                            if (v[1][test].toLowerCase() == value.toLowerCase()) {
+                                ret.push(v[0]);
+                            }
+                        } else {
+                            if (v[1][test] == value) {
+                                ret.push(v[0]);
+                            }
+                        }
+                    } else {
+                        if (v[1][test] == value) {
+                            ret.push(v[0]);
+                        }
+                    }
+                }
+            });
+        } else {
+            throw new TypeError("test must be either string or function");
+        }
         return ret;
     }
     concat(...iterables) {
@@ -329,7 +369,13 @@ class Storage extends Map {
         return new this.constructor(this.array().map((v, i) => (i >= start && i < end) ? [v[0], value] : v));
     }
     map(callback) {
-        return new this.constructor(this.array().map(v => [v[0], callback(v[1], v[0], this)]));
+        if (callback instanceof Function) {
+            return new this.constructor(this.array().map(v => [v[0], callback(v[1], v[0], this)]));
+        } else if (typeof callback === "string") {
+            return new this.constructor(this.array().map(v => [v[0], v[1][callback]]));
+        } else {
+            throw new TypeError("must give either a function or a string");
+        }
     }
     forEach() {
         return this.map.apply(this, arguments);
