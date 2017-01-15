@@ -1,4 +1,4 @@
-Array.prototype.flatten = function(depth = Infinity) {
+function Flatten (depth = Infinity) {
     var array = this.concat([]);
     var currentDepth = 0;
     while (array.some(v => v instanceof Array) && currentDepth <= depth) {
@@ -14,7 +14,7 @@ Array.prototype.flatten = function(depth = Infinity) {
         currentDepth++;
     }
     return array;
-};
+}
 class Storage extends Map {
     constructor(iterable) {
         super(iterable);
@@ -222,13 +222,13 @@ class Storage extends Map {
         return ret;
     }
     concat(...iterables) {
-        iterables = iterables.map(it => it.map(v => Array.from(v))).map(it => it.filter(v => !this.keysArray().includes(v[0])));
+        iterables = iterables.map(it => Array.from(it)).map(it => it.filter(v => !this.keysArray().includes(v[0])));
         var array = this.array();
         iterables.map(v => array = array.concat(v));
         return new this.constructor(array);
     }
     concatOverwrite(...iterables) {
-        iterables = iterables.map(it => it.map(v => Array.from(v)));
+        iterables = iterables.map(it => Array.from(it));
         var array = this.array();
         iterables.map(v => array = array.concat(v));
         return new this.constructor(array);
@@ -445,7 +445,7 @@ function LoadEvents(array, emitter, thisArg) {
         throw new TypeError("array can have strings only");
     }
     try {
-        array = array.map(v => require(v)).flatten();
+        array = Flatten.call(array.map(v => require(v)));
     } catch (err) {
         throw new SyntaxError("invalid file path");
     }
@@ -482,7 +482,7 @@ function LoadVariables(array, store) {
         throw new TypeError("array can have strings only");
     }
     try {
-        array = array.map(v => require(v)).flatten();
+        array = Flatten.call(array.map(v => require(v)));
     } catch (err) {
         throw new SyntaxError("invalid file path");
     }
@@ -526,5 +526,6 @@ module.exports = {
     LoadVariables,
     ExportEvent,
     ExportVariable,
-    Storage
+    Storage,
+    Flatten
 };
