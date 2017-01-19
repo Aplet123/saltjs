@@ -474,6 +474,11 @@ class Storage extends Map {
     toString() {
         return `[object ${this.constructor.name}]`;
     }
+    toObject() {
+        var obj = {};
+        this.array().map(v => obj[v[0]] = v[1]);
+        return obj
+    }
 }
 
 function LoadEvents(array, emitter, thisArg) {
