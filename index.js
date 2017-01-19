@@ -477,7 +477,7 @@ class Storage extends Map {
     toObject() {
         var obj = {};
         this.array().map(v => obj[v[0]] = v[1]);
-        return obj
+        return obj;
     }
 }
 
