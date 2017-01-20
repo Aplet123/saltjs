@@ -28,6 +28,9 @@ class Storage extends Map {
     keysArray() {
         return Array.from(this.keys());
     }
+    keyArray() {
+        return Array.from(this.keys());
+    }
     array() {
         return Array.from(this);
     }
