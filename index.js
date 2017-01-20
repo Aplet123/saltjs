@@ -401,7 +401,7 @@ class Storage extends Map {
             }
         }) !== undefined;
     }
-    indexOf(value, caseSensitive = true, strict = true) {
+    keyOf(value, caseSensitive = true, strict = true) {
         var array = this.array();
         return (array.find(v => {
             if (strict) {
@@ -419,8 +419,8 @@ class Storage extends Map {
             }
         }) || [-1])[0];
     }
-    indexOfLast() {
-        return this.indexOf.apply(this.reverse(), arguments);
+    keyOfLast() {
+        return this.keyOf.apply(this.reverse(), arguments);
     }
     pop() {
         var ret = this.last();
