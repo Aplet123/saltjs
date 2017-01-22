@@ -27,23 +27,23 @@ class Storage extends Map {
             return (this.array().find(element => {
                 if (strict) {
                     if (!caseSensitive) {
-                        if (typeof element[1][test] === "string" && typeof value === "string") {
-                            return element[1][test].toLowerCase() === value.toLowerCase();
+                        if (typeof _.at(element[1], [test])[0] === "string" && typeof value === "string") {
+                            return _.at(element[1], [test])[0].toLowerCase() === value.toLowerCase();
                         } else {
-                            return element[1][test] === value;
+                            return _.at(element[1], [test])[0] === value;
                         }
                     } else {
-                        return element[1][test] === value;
+                        return _.at(element[1], [test])[0] === value;
                     }
                 } else {
                     if (!caseSensitive) {
-                        if (typeof element[1][test] === "string" && typeof value === "string") {
-                            return element[1][test].toLowerCase() == value.toLowerCase();
+                        if (typeof _.at(element[1], [test])[0] === "string" && typeof value === "string") {
+                            return _.at(element[1], [test])[0].toLowerCase() == value.toLowerCase();
                         } else {
-                            return element[1][test] == value;
+                            return _.at(element[1], [test])[0] == value;
                         }
                     } else {
-                        return element[1][test] == value;
+                        return _.at(element[1], [test])[0] == value;
                     }
                 }
             }, this) || [])[1];
@@ -60,23 +60,23 @@ class Storage extends Map {
             return (this.array().reverse().find(element => {
                 if (strict) {
                     if (!caseSensitive) {
-                        if (typeof element[1][test] === "string" && typeof value === "string") {
-                            return element[1][test].toLowerCase() === value.toLowerCase();
+                        if (typeof _.at(element[1], [test])[0] === "string" && typeof value === "string") {
+                            return _.at(element[1], [test])[0].toLowerCase() === value.toLowerCase();
                         } else {
-                            return element[1][test] === value;
+                            return _.at(element[1], [test])[0] === value;
                         }
                     } else {
-                        return element[1][test] === value;
+                        return _.at(element[1], [test])[0] === value;
                     }
                 } else {
                     if (!caseSensitive) {
-                        if (typeof element[1][test] === "string" && typeof value === "string") {
-                            return element[1][test].toLowerCase() == value.toLowerCase();
+                        if (typeof _.at(element[1], [test])[0] === "string" && typeof value === "string") {
+                            return _.at(element[1], [test])[0].toLowerCase() == value.toLowerCase();
                         } else {
-                            return element[1][test] == value;
+                            return _.at(element[1], [test])[0] == value;
                         }
                     } else {
-                        return element[1][test] == value;
+                        return _.at(element[1], [test])[0] == value;
                     }
                 }
             }, this) || [])[1];
@@ -93,23 +93,23 @@ class Storage extends Map {
             return (this.array().find(element => {
                 if (strict) {
                     if (!caseSensitive) {
-                        if (typeof element[1][test] === "string" && typeof value === "string") {
-                            return element[1][test].toLowerCase() === value.toLowerCase();
+                        if (typeof _.at(element[1], [test])[0] === "string" && typeof value === "string") {
+                            return _.at(element[1], [test])[0].toLowerCase() === value.toLowerCase();
                         } else {
-                            return element[1][test] === value;
+                            return _.at(element[1], [test])[0] === value;
                         }
                     } else {
-                        return element[1][test] === value;
+                        return _.at(element[1], [test])[0] === value;
                     }
                 } else {
                     if (!caseSensitive) {
-                        if (typeof element[1][test] === "string" && typeof value === "string") {
-                            return element[1][test].toLowerCase() == value.toLowerCase();
+                        if (typeof _.at(element[1], [test])[0] === "string" && typeof value === "string") {
+                            return _.at(element[1], [test])[0].toLowerCase() == value.toLowerCase();
                         } else {
-                            return element[1][test] == value;
+                            return _.at(element[1], [test])[0] == value;
                         }
                     } else {
-                        return element[1][test] == value;
+                        return _.at(element[1], [test])[0] == value;
                     }
                 }
             }, this) || [])[0];
@@ -126,23 +126,23 @@ class Storage extends Map {
             return (this.array().reverse().find(element => {
                 if (strict) {
                     if (!caseSensitive) {
-                        if (typeof element[1][test] === "string" && typeof value === "string") {
-                            return element[1][test].toLowerCase() === value.toLowerCase();
+                        if (typeof _.at(element[1], [test])[0] === "string" && typeof value === "string") {
+                            return _.at(element[1], [test])[0].toLowerCase() === value.toLowerCase();
                         } else {
-                            return element[1][test] === value;
+                            return _.at(element[1], [test])[0] === value;
                         }
                     } else {
-                        return element[1][test] === value;
+                        return _.at(element[1], [test])[0] === value;
                     }
                 } else {
                     if (!caseSensitive) {
-                        if (typeof element[1][test] === "string" && typeof value === "string") {
-                            return element[1][test].toLowerCase() == value.toLowerCase();
+                        if (typeof _.at(element[1], [test])[0] === "string" && typeof value === "string") {
+                            return _.at(element[1], [test])[0].toLowerCase() == value.toLowerCase();
                         } else {
-                            return element[1][test] == value;
+                            return _.at(element[1], [test])[0] == value;
                         }
                     } else {
-                        return element[1][test] == value;
+                        return _.at(element[1], [test])[0] == value;
                     }
                 }
             }, this) || [])[0];
@@ -162,33 +162,33 @@ class Storage extends Map {
             this.array().map(v => {
                 if (strict) {
                     if (!caseSensitive) {
-                        if (typeof v[1][test] === "string" && typeof value === "string") {
-                            if (v[1][test].toLowerCase() === value.toLowerCase()) {
+                        if (typeof _.at(v[1], [test])[0] === "string" && typeof value === "string") {
+                            if (_.at(v[1], [test])[0].toLowerCase() === value.toLowerCase()) {
                                 ret.push(v[1]);
                             }
                         } else {
-                            if (v[1][test] === value) {
+                            if (_.at(v[1], [test])[0] === value) {
                                 ret.push(v[1]);
                             }
                         }
                     } else {
-                        if (v[1][test] === value) {
+                        if (_.at(v[1], [test])[0] === value) {
                             ret.push(v[1]);
                         }
                     }
                 } else {
                     if (!caseSensitive) {
-                        if (typeof v[1][test] === "string" && typeof value === "string") {
-                            if (v[1][test].toLowerCase() == value.toLowerCase()) {
+                        if (typeof _.at(v[1], [test])[0] === "string" && typeof value === "string") {
+                            if (_.at(v[1], [test])[0].toLowerCase() == value.toLowerCase()) {
                                 ret.push(v[1]);
                             }
                         } else {
-                            if (v[1][test] == value) {
+                            if (_.at(v[1], [test])[0] == value) {
                                 ret.push(v[1]);
                             }
                         }
                     } else {
-                        if (v[1][test] == value) {
+                        if (_.at(v[1], [test])[0] == value) {
                             ret.push(v[1]);
                         }
                     }
@@ -211,33 +211,33 @@ class Storage extends Map {
             this.array().map(v => {
                 if (strict) {
                     if (!caseSensitive) {
-                        if (typeof v[1][test] === "string" && typeof value === "string") {
-                            if (v[1][test].toLowerCase() === value.toLowerCase()) {
+                        if (typeof _.at(v[1], [test])[0] === "string" && typeof value === "string") {
+                            if (_.at(v[1], [test])[0].toLowerCase() === value.toLowerCase()) {
                                 ret.push(v[0]);
                             }
                         } else {
-                            if (v[1][test] === value) {
+                            if (_.at(v[1], [test])[0] === value) {
                                 ret.push(v[0]);
                             }
                         }
                     } else {
-                        if (v[1][test] === value) {
+                        if (_.at(v[1], [test])[0] === value) {
                             ret.push(v[0]);
                         }
                     }
                 } else {
                     if (!caseSensitive) {
-                        if (typeof v[1][test] === "string" && typeof value === "string") {
-                            if (v[1][test].toLowerCase() == value.toLowerCase()) {
+                        if (typeof _.at(v[1], [test])[0] === "string" && typeof value === "string") {
+                            if (_.at(v[1], [test])[0].toLowerCase() == value.toLowerCase()) {
                                 ret.push(v[0]);
                             }
                         } else {
-                            if (v[1][test] == value) {
+                            if (_.at(v[1], [test])[0] == value) {
                                 ret.push(v[0]);
                             }
                         }
                     } else {
-                        if (v[1][test] == value) {
+                        if (_.at(v[1], [test])[0] == value) {
                             ret.push(v[0]);
                         }
                     }
@@ -247,6 +247,21 @@ class Storage extends Map {
             throw new TypeError("test must be either string or function");
         }
         return ret;
+    }
+    findCollection(test, value, caseSensitive = true, strict = true) {
+        var value = this.find(test, value, caseSensitive, strict);
+        var key = this.findKey(test, value, caseSensitive, strict);
+        return new this.constructor([[value, key]]);
+    }
+    findCollectionLast(test, value, caseSensitive = true, strict = true) {
+        var value = this.findLast(test, value, caseSensitive, strict);
+        var key = this.findKeyLast(test, value, caseSensitive, strict);
+        return new this.constructor([[value, key]]);
+    }
+    findCollectionAll(test, value, caseSensitive = true, strict = true) {
+        var values = this.findAll(test, value, caseSensitive, strict);
+        var keys = this.findKeyAll(test, value, caseSensitive, strict);
+        return new this.constructor(keys.map((v, i) => [v, values[i]]));
     }
     concat(...iterables) {
         iterables = iterables.map(it => Array.from(it)).map(it => it.filter(v => !this.keysArray().includes(v[0])));
@@ -868,6 +883,63 @@ class Storage extends Map {
         arrays = arrays.map(arr => Array.from(arr));
         var comparator = arrays.pop();
         return new this.constructor(_.xorWith.apply({}, [this.array()].concat(arrays).concat([(a, b) => comparator(a[0], b[0], a[1], b[1])])));
+    }
+    shuffle() {
+        return new this.constructor(_.shuffle(this.array()));
+    }
+    sample() {
+        return new this.constructor([_.sample(this.array())]);
+    }
+    sampleSize(num = 1) {
+        return new this.constructor(_.sampleSize(this.array(), num));
+    }
+    reject(test, value, caseSensitive = true, strict = true) {
+        if (typeof test === "function") {
+            return new this.constructor(_.reject(this.array(), v => test(v[1], v[0], this)));
+        } else if (typeof test === "string") {
+            if (strict) {
+                if (caseSensitive) {
+                    return new this.constructor(this.findCollectionAll(v => _.at(v, [test])[0] !== value));
+                } else {
+                    return new this.constructor(this.findCollectionAll(v => {
+                        if(typeof _.at(v, [test])[0] === "string" && typeof value === "string") {
+                            return _.at(v, [test])[0].toLowerCase() !== value.toLowerCase();
+                        } else {
+                            return _.at(v, [test])[0] !== value;
+                        }
+                    }
+                    ));
+                }
+            } else {
+                if (caseSensitive) {
+                    return new this.constructor(this.findCollectionAll(v => _.at(v, [test])[0] != value));
+                } else {
+                    return new this.constructor(this.findCollectionAll(v => {
+                        if(typeof _.at(v, [test])[0] === "string" && typeof value === "string") {
+                            return _.at(v, [test])[0].toLowerCase() != value.toLowerCase();
+                        } else {
+                            return _.at(v, [test])[0] != value;
+                        }
+                    }
+                    ));
+                }
+            }
+        } else {
+            throw new TypeError("must provide either function or string");
+        }
+    }
+    countBy(iteratee = _.identity) {
+        return Storage.fromObject(_.countBy(this.valuesArray(), iteratee));
+    }
+    groupBy(iteratee = _.identity) {
+        return Storage.fromObject(_.groupBy(this.valuesArray(), iteratee));
+    }
+    partition(predicate = _.identity) {
+        var stor = new Storage();
+        var part = _.partition(this.array(), v => predicate(v[1]));
+        stor.set(true, new this.constructor(part[0]));
+        stor.set(false, new this.constructor(part[1]));
+        return stor;
     }
     toString() {
         return `[object ${this.constructor.name}]`;
