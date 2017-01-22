@@ -486,11 +486,11 @@ class Storage extends Map {
         values = Array.from(values);
         if (strict) {
             if (caseSensitive) {
-                return new this.constructor(_.differenceWith(this.array(), values, (a, b) => a[1] === b));
+                return new this.constructor(_.differenceWith(this.array(), values, (a, b) => a[1] === b[1]));
             } else {
                 return new this.constructor(_.differenceWith(this.array(), values, (a, b) => {
-                    if (typeof a[1] === "string" && typeof b === "string") {
-                        return a[1].toLowerCase() === b.toLowerCase();
+                    if (typeof a[1] === "string" && typeof b[1] === "string") {
+                        return a[1].toLowerCase() === b[1].toLowerCase();
                     } else {
                         return a[1] === b;
                     }
@@ -498,13 +498,13 @@ class Storage extends Map {
             }
         } else {
             if (caseSensitive) {
-                return new this.constructor(_.differenceWith(this.array(), values, (a, b) => a[1] == b));
+                return new this.constructor(_.differenceWith(this.array(), values, (a, b) => a[1] == b[1]));
             } else {
                 return new this.constructor(_.differenceWith(this.array(), values, (a, b) => {
-                    if (typeof a[1] === "string" && typeof b === "string") {
-                        return a[1].toLowerCase() == b.toLowerCase();
+                    if (typeof a[1] === "string" && typeof b[1] === "string") {
+                        return a[1].toLowerCase() == b[1].toLowerCase();
                     } else {
-                        return a[1] == b;
+                        return a[1] == b[1];
                     }
                 }));
             }
@@ -518,11 +518,11 @@ class Storage extends Map {
         var excludes = values.map(v => iteratee(v));
         if (strict) {
             if (caseSensitive) {
-                return new this.constructor(_.differenceWith(arr, excludes, (a, b) => a[1] === b));
+                return new this.constructor(_.differenceWith(arr, excludes, (a, b) => a[1] === b[1]));
             } else {
                 return new this.constructor(_.differenceWith(arr, excludes, (a, b) => {
-                    if (typeof a[1] === "string" && typeof b === "string") {
-                        return a[1].toLowerCase() === b.toLowerCase();
+                    if (typeof a[1] === "string" && typeof b[1] === "string") {
+                        return a[1].toLowerCase() === b[1].toLowerCase();
                     } else {
                         return a[1] === b;
                     }
@@ -530,13 +530,13 @@ class Storage extends Map {
             }
         } else {
             if (caseSensitive) {
-                return new this.constructor(_.differenceWith(arr, excludes, (a, b) => a[1] == b));
+                return new this.constructor(_.differenceWith(arr, excludes, (a, b) => a[1] == b[1]));
             } else {
                 return new this.constructor(_.differenceWith(arr, excludes, (a, b) => {
-                    if (typeof a[1] === "string" && typeof b === "string") {
-                        return a[1].toLowerCase() == b.toLowerCase();
+                    if (typeof a[1] === "string" && typeof b[1] === "string") {
+                        return a[1].toLowerCase() == b[1].toLowerCase();
                     } else {
-                        return a[1] == b;
+                        return a[1] == b[1];
                     }
                 }));
             }
@@ -545,7 +545,7 @@ class Storage extends Map {
     }
     differenceWith(values, comparator) {
         values = Array.from(values);
-        return new this.constructor(_.differenceWith(this.array(), values, (a, b) => comparator(a[1], b)));
+        return new this.constructor(_.differenceWith(this.array(), values, (a, b) => comparator(a[1], b[1])));
     }
     drop(num = 1) {
         return new this.constructor(_.drop(this.array(), num));
@@ -573,25 +573,25 @@ class Storage extends Map {
         values = Array.from(values);
         if (strict) {
             if (caseSensitive) {
-                return new this.constructor(_.intersectionWith(this.array(), values, (a, b) => a[1] === b));
+                return new this.constructor(_.intersectionWith(this.array(), values, (a, b) => a[1] === b[1]));
             } else {
                 return new this.constructor(_.intersectionWith(this.array(), values, (a, b) => {
-                    if (typeof a[1] === "string" && typeof b === "string") {
-                        return a[1].toLowerCase() === b.toLowerCase();
+                    if (typeof a[1] === "string" && typeof b[1] === "string") {
+                        return a[1].toLowerCase() === b[1].toLowerCase();
                     } else {
-                        return a[1] === b;
+                        return a[1] === b[1];
                     }
                 }));
             }
         } else {
             if (caseSensitive) {
-                return new this.constructor(_.intersectionWith(this.array(), values, (a, b) => a[1] == b));
+                return new this.constructor(_.intersectionWith(this.array(), values, (a, b) => a[1] == b[1]));
             } else {
                 return new this.constructor(_.intersectionWith(this.array(), values, (a, b) => {
-                    if (typeof a[1] === "string" && typeof b === "string") {
-                        return a[1].toLowerCase() == b.toLowerCase();
+                    if (typeof a[1] === "string" && typeof b[1] === "string") {
+                        return a[1].toLowerCase() == b[1].toLowerCase();
                     } else {
-                        return a[1] == b;
+                        return a[1] == b[1];
                     }
                 }));
             }
@@ -605,25 +605,25 @@ class Storage extends Map {
         var excludes = values.map(v => iteratee(v));
         if (strict) {
             if (caseSensitive) {
-                return new this.constructor(_.intersectionWith(arr, excludes, (a, b) => a[1] === b));
+                return new this.constructor(_.intersectionWith(arr, excludes, (a, b) => a[1] === b[1]));
             } else {
                 return new this.constructor(_.intersectionWith(arr, excludes, (a, b) => {
-                    if (typeof a[1] === "string" && typeof b === "string") {
-                        return a[1].toLowerCase() === b.toLowerCase();
+                    if (typeof a[1] === "string" && typeof b[1] === "string") {
+                        return a[1].toLowerCase() === b[1].toLowerCase();
                     } else {
-                        return a[1] === b;
+                        return a[1] === b[1];
                     }
                 }));
             }
         } else {
             if (caseSensitive) {
-                return new this.constructor(_.intersectionWith(arr, excludes, (a, b) => a[1] == b));
+                return new this.constructor(_.intersectionWith(arr, excludes, (a, b) => a[1] == b[1]));
             } else {
                 return new this.constructor(_.intersectionWith(arr, excludes, (a, b) => {
-                    if (typeof a[1] === "string" && typeof b === "string") {
-                        return a[1].toLowerCase() == b.toLowerCase();
+                    if (typeof a[1] === "string" && typeof b[1] === "string") {
+                        return a[1].toLowerCase() == b[1].toLowerCase();
                     } else {
-                        return a[1] == b;
+                        return a[1] == b[1];
                     }
                 }));
             }
@@ -632,7 +632,7 @@ class Storage extends Map {
     }
     intersectionWith(values, comparator) {
         values = Array.from(values);
-        return new this.constructor(_.intersectionWith(this.array(), values, (a, b) => comparator(a[1], b)));
+        return new this.constructor(_.intersectionWith(this.array(), values, (a, b) => comparator(a[1], b[1])));
     }
     end() {
         return new this.constructor([
