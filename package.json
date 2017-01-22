@@ -1,11 +1,14 @@
 {
   "name": "saltjs",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "description": "A nice Discord modular framework.",
   "main": "index.js",
   "scripts": {
     "test": "echo lolroflcopter"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies" : {
+    "lodash": "^4.17.4"
+  }
 }
