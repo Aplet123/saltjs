@@ -767,7 +767,7 @@ class Storage extends Map {
     unionWith(...arrays) {
         var comparator = arrays.pop();
         arrays = arrays.map(arr => Array.from(arr));
-        return new this.constructor(_.unionWith(_.flatten([this.array()].concat(arrays)), (a, b) => comparator(a[0], b[0], a[1], b[1])));
+        return new this.constructor(_.unionWith(_.flatten([this.array()].concat(arrays)), (a, b) => comparator(a[1], b[1])));
     }
     xor(...values) {
         var strict;
@@ -882,7 +882,7 @@ class Storage extends Map {
     xorWith(...arrays) {
         arrays = arrays.map(arr => Array.from(arr));
         var comparator = arrays.pop();
-        return new this.constructor(_.xorWith.apply({}, [this.array()].concat(arrays).concat([(a, b) => comparator(a[0], b[0], a[1], b[1])])));
+        return new this.constructor(_.xorWith.apply({}, [this.array()].concat(arrays).concat([(a, b) => comparator(a[1], b[1])])));
     }
     shuffle() {
         return new this.constructor(_.shuffle(this.array()));
