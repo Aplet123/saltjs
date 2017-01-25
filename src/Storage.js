@@ -929,13 +929,13 @@ class Storage extends Map {
         }
     }
     countBy(iteratee = _.identity) {
-        return Storage.fromObject(_.countBy(this.valuesArray(), iteratee));
+        return this.constructor.fromObject(_.countBy(this.valuesArray(), iteratee));
     }
     groupBy(iteratee = _.identity) {
-        return Storage.fromObject(_.groupBy(this.valuesArray(), iteratee)).map(v => this.constructor.fromObject(v));
+        return this.constructor.fromObject(_.groupBy(this.valuesArray(), iteratee)).map(v => this.constructor.fromObject(v));
     }
     partition(predicate = _.identity) {
-        var stor = new Storage();
+        var stor = new this.constructor();
         var part = _.partition(this.array(), v => predicate(v[1]));
         stor.set(true, new this.constructor(part[0]));
         stor.set(false, new this.constructor(part[1]));
