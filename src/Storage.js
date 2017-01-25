@@ -932,7 +932,7 @@ class Storage extends Map {
         return Storage.fromObject(_.countBy(this.valuesArray(), iteratee));
     }
     groupBy(iteratee = _.identity) {
-        return Storage.fromObject(_.groupBy(this.valuesArray(), iteratee));
+        return Storage.fromObject(_.groupBy(this.valuesArray(), iteratee)).map(v => this.constructor.fromObject(v));
     }
     partition(predicate = _.identity) {
         var stor = new Storage();
@@ -948,6 +948,9 @@ class Storage extends Map {
         var obj = {};
         this.array().map(v => obj[v[0]] = v[1]);
         return obj;
+    }
+    toJSON(replacer, space) {
+        return JSON.stringify(this.toObject(), replacer, space);
     }
     identity() {
         return this;
