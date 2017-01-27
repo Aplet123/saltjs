@@ -248,17 +248,17 @@ class Storage extends Map {
         }
         return ret;
     }
-    findCollection(test, value, caseSensitive = true, strict = true) {
+    findStorage(test, value, caseSensitive = true, strict = true) {
         var value = this.find(test, value, caseSensitive, strict);
         var key = this.findKey(test, value, caseSensitive, strict);
         return new this.constructor([[value, key]]);
     }
-    findCollectionLast(test, value, caseSensitive = true, strict = true) {
+    findStorageLast(test, value, caseSensitive = true, strict = true) {
         var value = this.findLast(test, value, caseSensitive, strict);
         var key = this.findKeyLast(test, value, caseSensitive, strict);
         return new this.constructor([[value, key]]);
     }
-    findCollectionAll(test, value, caseSensitive = true, strict = true) {
+    findStorageAll(test, value, caseSensitive = true, strict = true) {
         var values = this.findAll(test, value, caseSensitive, strict);
         var keys = this.findKeyAll(test, value, caseSensitive, strict);
         return new this.constructor(keys.map((v, i) => [v, values[i]]));
@@ -304,6 +304,9 @@ class Storage extends Map {
     }
     randomKey() {
         return this.keysArray()[Math.floor(Math.random() * this.keysArray().length)];
+    }
+    randomStorage() {
+        return new this.constructor(this.array()[Math.floor(Math.random() * this.array().length)]);
     }
     exists(prop, value, caseSensitive = true, strict = true) {
         return this.find(prop, value, caseSensitive, strict) !== undefined;
@@ -767,7 +770,7 @@ class Storage extends Map {
     unionWith(...arrays) {
         var comparator = arrays.pop();
         arrays = arrays.map(arr => Array.from(arr));
-        return new this.constructor(_.unionWith(_.flatten([this.array()].concat(arrays)), (a, b) => comparator(a[1], b[1])));
+        return new this.constructor(_.unionWith(_.flatten([this.array()].concat(arrays)), (a, b) => comparator(a[0], b[0], a[1], b[1])));
     }
     xor(...values) {
         var strict;
@@ -882,7 +885,7 @@ class Storage extends Map {
     xorWith(...arrays) {
         arrays = arrays.map(arr => Array.from(arr));
         var comparator = arrays.pop();
-        return new this.constructor(_.xorWith.apply({}, [this.array()].concat(arrays).concat([(a, b) => comparator(a[1], b[1])])));
+        return new this.constructor(_.xorWith.apply({}, [this.array()].concat(arrays).concat([(a, b) => comparator(a[0], b[0], a[1], b[1])])));
     }
     shuffle() {
         return new this.constructor(_.shuffle(this.array()));
@@ -899,9 +902,9 @@ class Storage extends Map {
         } else if (typeof test === "string") {
             if (strict) {
                 if (caseSensitive) {
-                    return new this.constructor(this.findCollectionAll(v => _.at(v, [test])[0] !== value));
+                    return new this.constructor(this.findStorageAll(v => _.at(v, [test])[0] !== value));
                 } else {
-                    return new this.constructor(this.findCollectionAll(v => {
+                    return new this.constructor(this.findStorageAll(v => {
                         if(typeof _.at(v, [test])[0] === "string" && typeof value === "string") {
                             return _.at(v, [test])[0].toLowerCase() !== value.toLowerCase();
                         } else {
@@ -912,9 +915,9 @@ class Storage extends Map {
                 }
             } else {
                 if (caseSensitive) {
-                    return new this.constructor(this.findCollectionAll(v => _.at(v, [test])[0] != value));
+                    return new this.constructor(this.findStorageAll(v => _.at(v, [test])[0] != value));
                 } else {
-                    return new this.constructor(this.findCollectionAll(v => {
+                    return new this.constructor(this.findStorageAll(v => {
                         if(typeof _.at(v, [test])[0] === "string" && typeof value === "string") {
                             return _.at(v, [test])[0].toLowerCase() != value.toLowerCase();
                         } else {
