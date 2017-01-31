@@ -377,7 +377,7 @@ class Storage extends Map {
         if (callback instanceof Function) {
             return new this.constructor(this.array().map(v => [v[0], callback(v[1], v[0], this)]));
         } else if (typeof callback === "string") {
-            return new this.constructor(this.array().map(v => [v[0], v[1][callback]]));
+            return new this.constructor(this.array().map(v => [v[0], _.at(v[1], [callback])[0]]));
         } else {
             throw new TypeError("must give either a function or a string");
         }
