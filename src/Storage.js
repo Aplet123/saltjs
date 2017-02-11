@@ -953,7 +953,7 @@ class Storage extends Map {
         return obj;
     }
     toJSON(replacer, space) {
-        return JSON.stringify(this.toObject(), replacer, space);
+        return this.toObject();
     }
     identity() {
         return this;
