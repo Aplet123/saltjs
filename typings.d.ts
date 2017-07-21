@@ -1,9 +1,9 @@
 declare namespace saltjs {
 
-  type FindIsh<K, V, T, R> = {
+  /* type FindIsh<K, V, T, R> = {
     (test: (val: V, key: K, storage: T) => boolean): R;
     (test: string, value: any, caseSensitive?: boolean, strict?: boolean): R;
-  }
+  } */
 
   export function ExportEvent <T extends Function> (event: string, handler: T): {
     type: "event",
@@ -33,22 +33,39 @@ declare namespace saltjs {
     public keyArray(): K[];
     public array(): [K, V][];
 
-    public find: FindIsh<K, V, this, V>;
-    public findLast: typeof Storage.prototype.find;
+    public find(test: (val: V, key: K, storage: this) => boolean): V;
+    public find(test: string, value: any, caseSensitive?: boolean, strict?: boolean): V;
 
-    public findKey: FindIsh<K, V, this, K>;
-    public findKeyLast: typeof Storage.prototype.findKey;
+    public findLast(test: (val: V, key: K, storage: this) => boolean): V;
+    public findLast(test: string, value: any, caseSensitive?: boolean, strict?: boolean): V;
 
-    public findAll: FindIsh<K, V, this, V[]>;
-    public findKeyAll: FindIsh<K, V, this, K[]>;
+    public findKey(test: (val: V, key: K, storage: this) => boolean): K;
+    public findKey(test: string, value: any, caseSensitive?: boolean, strict?: boolean): K;
 
-    public findStorage: FindIsh<K, V, this, Storage<V, K>>;
-    public findStorageLast: typeof Storage.prototype.findStorage;
+    public findKeyLast(test: (val: V, key: K, storage: this) => boolean): K;
+    public findKeyLast(test: string, value: any, caseSensitive?: boolean, strict?: boolean): K;
 
-    public findStorageAll: FindIsh<K, V, this, Storage<V, K>[]>;
+    public findAll(test: (val: V, key: K, storage: this) => boolean): V[];
+    public findAll(test: string, value: any, caseSensitive?: boolean, strict?: boolean): V[];
+
+    public findKeyAll(test: (val: V, key: K, storage: this) => boolean): K[];
+    public findKeyAll(test: string, value: any, caseSensitive?: boolean, strict?: boolean): K[];
+
+    public findStorage(test: (val: V, key: K, storage: this) => boolean): Storage<V, K>;
+    public findStorage(test: string, value: any, caseSensitive?: boolean, strict?: boolean): Storage<V, K>;
+
+    public findStorageLast(test: (val: V, key: K, storage: this) => boolean): Storage<V, K>;
+    public findStorageLast(
+      test: string, value: any, caseSensitive?: boolean, strict?: boolean
+    ): Storage<V, K>;
+
+    public findStorageAll(test: (val: V, key: K, storage: this) => boolean): Storage<V, K>[];
+    public findStorageAll(
+      test: string, value: any, caseSensitive?: boolean, strict?: boolean
+    ): Storage<V, K>[];
 
     public concat <k, v>(...iterables: Iterable<[k, v]>[]): Storage<K | k, V | v>;
-    public concatOverwrite: typeof Storage.prototype.concat;
+    public concatOverwrite <k, v>(...iterables: Iterable<[k, v]>[]): Storage<K | k, V | v>;
 
     public first(): V;
     public firstKey(): K;
@@ -65,15 +82,18 @@ declare namespace saltjs {
     public randomKey(): K;
     public randomStorage(): Storage<K, V>;
 
-    public exists: FindIsh<K, V, this, boolean>;
+    public exists(test: (val: V, key: K, storage: this) => boolean): boolean;
+    public exists(test: string, value: any, caseSensitive?: boolean, strict?: boolean): boolean;
 
     public reverse(): Storage<K, V>;
 
-    public equals(storage: Storage<K, V>, order?: boolean, strict?: boolean): boolean;
+    public equals(storage: Storage<any, any>, order?: boolean, strict?: boolean): boolean;
 
-    public every: typeof Storage.prototype.exists;
+    public every(test: (val: V, key: K, storage: this) => boolean): boolean;
+    public every(test: string, value: any, caseSensitive?: boolean, strict?: boolean): boolean;
 
-    public some: typeof Storage.prototype.exists;
+    public some(test: (val: V, key: K, storage: this) => boolean): boolean;
+    public some(test: string, value: any, caseSensitive?: boolean, strict?: boolean): boolean;
 
     public fill <T>(value: T): Storage<K, T>;
     public fill <T>(value: T, start: number, end: number): Storage<K, V | T>;
@@ -82,21 +102,27 @@ declare namespace saltjs {
     public map <TResult>(path: string): Storage<K, TResult>;
 
     // public forEach(callback: ((val: V, key: K, storage: this) => any)): void;
-    public forEach: typeof Storage.prototype.map;
+    public forEach <T>(callback: ((val: V, key: K, storage: this) => T)): Storage<K, T>;
+    public forEach <TResult>(path: string): Storage<K, TResult>;
 
     public includes(value: V, fromIndex?: number, caseSensitive?: boolean, strict?: boolean): boolean;
 
     public keyOf(value: V, caseSensitive?: boolean, strict?: boolean): K;
-    public keyOfLast: typeof Storage.prototype.keyOf;
+    public keyOfLast(value: V, caseSensitive?: boolean, strict?: boolean): K;
 
     public pop(): V;
     public unshift(): V;
 
-    public filter: FindIsh<K, V, this, Storage<K, V>>;
+    public filter(test: (val: V, key: K, storage: this) => boolean): Storage<K, V>;
+    public filter(test: string, value: any, caseSensitive?: boolean, strict?: boolean): Storage<K, V>;
 
     public reduce(callback: (accumulator: V, key: K, val: V, storage: this) => V, initialValue?: V): V;
     public reduce <T>(callback: (accumulator: T, key: K, val: V, storage: this) => T, initialValue: T): T;
-    public reduceRight: typeof Storage.prototype.reduce;
+
+    public reduceRight(callback: (accumulator: V, key: K, val: V, storage: this) => V, initialValue?: V): V;
+    public reduceRight <T>(
+      callback: (accumulator: T, key: K, val: V, storage: this) => T, initialValue: T
+    ): T;
 
     public slice(begin?: number, end?: number): Storage<K, V>;
 
@@ -128,36 +154,65 @@ declare namespace saltjs {
     ): Storage<K, V>;
 
     public drop(num?: number): Storage<K, V>;
-    public dropRight: typeof Storage.prototype.drop;
+    public dropRight(num?: number): Storage<K, V>;
 
     public dropRightWhile(predicate?: (val: V, key: K, storage: this) => boolean): Storage<K, V>;
-    public dropWhile: typeof Storage.prototype.dropRightWhile;
+    public dropWhile(predicate?: (val: V, key: K, storage: this) => boolean): Storage<K, V>;
 
     public head(): Storage<K, V>;
 
     public initial(): Storage<K, V>;
 
-    public intersection: typeof Storage.prototype.difference;
-    public intersectionBy: typeof Storage.prototype.differenceBy;
-    public intersectionWith: typeof Storage.prototype.differenceWith;
+    public intersection(
+      values: Iterable<[any, any]>, caseSensitive?: boolean, strict?: boolean
+    ): Storage<K, V>;
+
+    public intersectionBy <R>(
+      values: Iterable<[any, any]>, iteratee: (val: V) => R, caseSensitive?: boolean,
+      strict?: boolean
+    ): Storage<K, R>;
+    public intersectionBy <k extends keyof V>(
+      values: Iterable<[any, any]>, iteratee: k, caseSensitive?: boolean,
+      strict?: boolean
+    ): Storage<K, V[k]>
+
+    public intersectionWith <T>(
+      values: Iterable<[any, T]>, comparator: (val: V, outVal: T) => boolean
+    ): Storage<K, V>;
 
     public end(): Storage<K, V>;
 
-    public pull: typeof Storage.prototype.difference;
-    public pullAll: typeof Storage.prototype.difference;
-    public pullAllBy: typeof Storage.prototype.differenceBy;
-    public pullAllWith: typeof Storage.prototype.differenceWith;
+    public pull(
+      values: Iterable<[any, any]>, caseSensitive?: boolean, strict?: boolean
+    ): Storage<K, V>;
+    public pullAll(
+      values: Iterable<[any, any]>, caseSensitive?: boolean, strict?: boolean
+    ): Storage<K, V>;
+
+    public pullAllBy <R>(
+      values: Iterable<[any, any]>, iteratee: (val: V) => R, caseSensitive?: boolean,
+      strict?: boolean
+    ): Storage<K, R>;
+    public pullAllBy <k extends keyof V>(
+      values: Iterable<[any, any]>, iteratee: k, caseSensitive?: boolean,
+      strict?: boolean
+    ): Storage<K, V[k]>
+
+    public pullAllWith <T>(
+      values: Iterable<[any, T]>, comparator: (val: V, outVal: T) => boolean
+    ): Storage<K, V>;
 
     public at(indexes: K[]): Storage<K, V>;
-    public pullAt: typeof Storage.prototype.at;
+    public pullAt(indexes: K[]): Storage<K, V>;
 
-    public remove: typeof Storage.prototype.filter;
+    public remove(test: (val: V, key: K, storage: this) => boolean): Storage<K, V>;
+    public remove(test: string, value: any, caseSensitive?: boolean, strict?: boolean): Storage<K, V>;
 
     public sortedIndex(val: any): number;
     public sortedIndexBy <T>(val: T, iteratee: (val: T) => any): number;
 
-    public sortedLastIndex: typeof Storage.prototype.sortedIndex;
-    public sortedLastIndexBy: typeof Storage.prototype.sortedIndexBy;
+    public sortedLastIndex(val: any): number;
+    public sortedLastIndexBy <T>(val: T, iteratee: (val: T) => any): number;
 
     public uniq(caseSensitive?: boolean, strict?: boolean): Storage<K, V>;
     public uniqBy(
@@ -168,12 +223,12 @@ declare namespace saltjs {
     public tail(): Storage<K, V>;
 
     public take(num?: number): Storage<K, V>;
-    public takeRight: typeof Storage.prototype.take;
+    public takeRight(num?: number): Storage<K, V>;
 
-    public takeRightWhile: typeof Storage.prototype.dropRightWhile;
-    public takeWhile: typeof Storage.prototype.dropWhile;
+    public takeRightWhile(predicate?: (val: V, key: K, storage: this) => boolean): Storage<K, V>;
+    public takeWhile(predicate?: (val: V, key: K, storage: this) => boolean): Storage<K, V>;
 
-    public union: typeof Storage.prototype.concat;
+    public union <k, v>(...iterables: Iterable<[k, v]>[]): Storage<K | k, V | v>;
 
     /* I had to do each possibility from 1 to 6 because TypeScript doesn't support backwards
     variable arguments */
@@ -377,7 +432,8 @@ declare namespace saltjs {
     public sample(): Storage<K, V>;
     public sampleSize(num?: number): Storage<K, V>;
 
-    public reject: typeof Storage.prototype.filter;
+    public reject(test: (val: V, key: K, storage: this) => boolean): Storage<K, V>;
+    public reject(test: string, value: any, caseSensitive?: boolean, strict?: boolean): Storage<K, V>;
 
     public countBy(iteratee?: (val: V) => any): Storage<string, number>;
 
