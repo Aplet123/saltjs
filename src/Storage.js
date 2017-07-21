@@ -883,8 +883,8 @@ class Storage extends Map {
         return this.xor.apply(new this.constructor(arr), values.concat([strict, caseSensitive]));
     }
     xorWith(...arrays) {
-        arrays = arrays.map(arr => Array.from(arr));
         var comparator = arrays.pop();
+        arrays = arrays.map(arr => Array.from(arr));
         return new this.constructor(_.xorWith.apply({}, [this.array()].concat(arrays).concat([(a, b) => comparator(a[0], b[0], a[1], b[1])])));
     }
     shuffle() {
