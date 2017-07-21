@@ -249,14 +249,14 @@ class Storage extends Map {
         return ret;
     }
     findStorage(test, value, caseSensitive = true, strict = true) {
-        var value = this.find(test, value, caseSensitive, strict);
+        var val = this.find(test, value, caseSensitive, strict);
         var key = this.findKey(test, value, caseSensitive, strict);
-        return new this.constructor([[value, key]]);
+        return new this.constructor([[val, key]]);
     }
     findStorageLast(test, value, caseSensitive = true, strict = true) {
-        var value = this.findLast(test, value, caseSensitive, strict);
+        var val = this.findLast(test, value, caseSensitive, strict);
         var key = this.findKeyLast(test, value, caseSensitive, strict);
-        return new this.constructor([[value, key]]);
+        return new this.constructor([[val, key]]);
     }
     findStorageAll(test, value, caseSensitive = true, strict = true) {
         var values = this.findAll(test, value, caseSensitive, strict);
@@ -751,10 +751,11 @@ class Storage extends Map {
         return new this.constructor(_.takeRight(this.array(), num));
     }
     takeRightWhile(predicate = _.identity) {
-        return new this.constructor(_.takeRightWhile(this.array(), predicate));
+        // return new this.constructor(_.takeRightWhile(this.array(), predicate));
+        return new this.constructor(_.takeRightWhile(this.array(), v => predicate(v[1], v[0], this)))
     }
     takeWhile(predicate = _.identity) {
-        return new this.constructor(_.takeWhile(this.array(), predicate));
+        return new this.constructor(_.takeWhile(this.array(), v => predicate(v[1], v[0], this)));
     }
     union() {
         return this.concat.apply(this, arguments);
@@ -935,7 +936,7 @@ class Storage extends Map {
         return this.constructor.fromObject(_.countBy(this.valuesArray(), iteratee));
     }
     groupBy(iteratee = _.identity) {
-        return this.constructor.fromObject(_.groupBy(this.valuesArray(), iteratee)).map(v => this.constructor.fromObject(v));
+        return this.constructor.fromObject(_.groupBy(this.valuesArray(), iteratee)); //.map(v => this.constructor.fromObject(v));
     }
     partition(predicate = _.identity) {
         var stor = new this.constructor();
